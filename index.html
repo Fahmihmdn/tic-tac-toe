@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tic-tac-toe</title>
+
+<style>
+	canvas{
+		border:1px solid #333;
+		position:absolute;
+		margin:auto;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+		}
+</style>
+
+
+<script>
+var canvas, cntx;
+
+window.onload = function main() {
+	canvas = document.createElement("canvas");
+	canvas.width = canvas.height = 250;
+	cntx = canvas.getContext("2d");
+	
+	document.body.appendChild(canvas);
+	
+	init();
+	tick();
+}
+
+function init() {
+
+}
+
+function tick() {
+	window.requestAnimationFrame(tick);
+	
+	update();
+	render();
+}
+
+function update() {}
+
+function render() {}
+
+function Tile(x, y) {
+	var x = x, y = y;
+	
+	var tile = Tile.BLANK;
+	
+	this.update = function() {}
+	
+	this.draw = function(cntx) {
+		cntx.drawImage(tile, x, y);
+	}
+}
+
+</script>
+
+</head>
+
+<body>
+</body>
+</html>
