@@ -19,6 +19,7 @@
 
 <script>
 var canvas, cntx;
+var data;
 
 window.onload = function main() {
 	canvas = document.createElement("canvas");
@@ -32,7 +33,7 @@ window.onload = function main() {
 }
 
 function init() {
-
+	data = new Tile(20,20);
 }
 
 function tick() {
@@ -44,12 +45,60 @@ function tick() {
 
 function update() {}
 
-function render() {}
+function render() {
+	data.draw(cntx);
+	}
 
 function Tile(x, y) {
 	var x = x, y = y;
 	
 	var tile = Tile.BLANK;
+	
+	if(tile == null) {
+		
+		var _c = document.createElement("canvas");
+		_c.width = _c.height = 100;
+		_cntx = _c.getContext("2d");
+		
+		_cntx.fillStyle="#ffff66";
+		_cntx.lineWidth = 4;
+		_cntx.strokeStyle = "#00cc66";
+		
+		
+		
+		//kosong
+		_cntx.fillRect(0,0,100,100);
+		Tile.BLANK = new Image();
+		Tile.BLANK.src = _c.toDataURL();
+		
+		//bulat
+		_cntx.fillRect(0,0,100,100);
+		
+		_cntx.beginPath();
+		_cntx.arc(50,50,30,0,2*Math.PI);
+		_cntx.stroke();
+		
+		Tile.NOUGHT = new Image();
+		Tile.NOUGHT.src = _c.toDataURL();
+		
+		//silang
+		_cntx.fillRect(0,0,100,100);
+		
+		_cntx.beginPath();
+		_cntx.moveTo(20,20);
+		_cntx.lineTo(80,80);
+		_cntx.moveTo(80,20);
+		_cntx.lineTo(20,80);
+		_cntx.stroke();
+		
+		Tile.CROSS = new Image();
+		Tile.CROSS.src = _c.toDataURL();
+		
+		//tile = Tile.CROSS;
+		
+		
+		tile = Tile.BLANK;
+	}
 	
 	this.update = function() {}
 	
