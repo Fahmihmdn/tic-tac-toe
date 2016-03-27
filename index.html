@@ -71,8 +71,25 @@ function tick() {
 
 function update() {
 	//data.update();
+	var activeAnim = false;
 	for (var i = data.length; i--;) {
 	data[i].update();
+	activeAnim = activeAnim || data[i].active();
+	}
+	if(!activeAnim){
+		if(!aiMoved && !isPlayer){
+			var m = ai.move();
+			if (m === -1) {
+				console.log("draw");
+				//return;
+			} else {
+				data[m].flip(ai.getSeed());
+			}
+			isPlayer = true;
+		}
+		aiMoved = true;
+	} else {
+		aiMoved = false;
 	}
 }
 
@@ -86,6 +103,7 @@ function render() {
 }
 
 function mouseDown(evt) {
+	if (!isPlayer) return;
 	var el = evt.target;
 
 	var px = evt.clientX - el.offsetLeft;
@@ -99,7 +117,11 @@ function mouseDown(evt) {
 			return;
 		}
 		data[idx].flip(player);
-		player = player === Tile.NOUGHT ? Tile.CROSS : Tile.NOUGHT; //CROSS and NOUGHT player run after each other run.
+		//CROSS and NOUGHT player run after each other run.
+		/*player = player === Tile.NOUGHT ? Tile.CROSS : Tile.NOUGHT; */
+		isPlayer = false;
+
+
 	}
 }
 
@@ -155,6 +177,11 @@ function Tile(x, y) {
 		
 		tile = Tile.BLANK;
 	}
+
+	this.active = function(){
+		return anim > 0;
+	}
+
 
 	this.equals = function(_tile) {
 		return tile === _tile;
